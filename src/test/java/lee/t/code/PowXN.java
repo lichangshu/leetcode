@@ -63,5 +63,11 @@ public class PowXN {
             double v = this.myPow(x, n);
             Assert.assertEquals(Math.pow(x, n), v, 0.00000000000000001);
         }
+        {
+            double x = 65;
+            int n = 8;
+            double v = this.myPow(x, n);
+            Assert.assertEquals(Math.pow(x, n), v, 0.00000000000000001);
+        }
     }
 }
