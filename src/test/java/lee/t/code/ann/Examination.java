@@ -1,7 +1,9 @@
 package lee.t.code.ann;
 
 public @interface Examination {
-    String[] value();
+    String value() default "";
+
+    String[] description() default {};
 
     String url() default "";
 }

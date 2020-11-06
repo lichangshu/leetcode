@@ -6,7 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 @Examination(
-        value = {"给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。"},
+        value = "最长回文子串",
+        description = {"给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。"},
         url = "https://leetcode-cn.com/problems/longest-palindromic-substring/"
 )
 public class LongestPalindrome {
