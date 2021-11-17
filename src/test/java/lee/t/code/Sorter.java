@@ -231,9 +231,19 @@ public class Sorter {
 
     @Test
     public void testHeapSort() {
-        int[] arr = new Random().ints(0, 99).limit(20).toArray();
-        heapSort(arr);
-        printArray(arr);
+        for (int size = 0; size < 100; size++) {
+            int[] arr = new Random().ints(0, 99).limit(size).toArray();
+            heapSort(arr);
+            // printArray(arr);
+            for (int i = 0; i < arr.length; i++) {
+                if (i * 2 + 1 < arr.length) {
+                    Assert.assertTrue(arr[i] >= arr[i * 2 + 1]);
+                }
+                if (i * 2 + 2 < arr.length) {
+                    Assert.assertTrue(arr[i] >= arr[i * 2 + 2]);
+                }
+            }
+        }
     }
 
     @Test
