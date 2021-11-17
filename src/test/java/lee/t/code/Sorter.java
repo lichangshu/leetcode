@@ -202,12 +202,38 @@ public class Sorter {
         };
 
         public abstract void sort(int[] arr);
+    }
 
-        public void exchange(int[] arr, int index1, int index2) {
-            int val = arr[index1];
-            arr[index1] = arr[index2];
-            arr[index2] = val;
+    public static void exchange(int[] arr, int index1, int index2) {
+        int val = arr[index1];
+        arr[index1] = arr[index2];
+        arr[index2] = val;
+    }
+
+    public static void heapSort(int[] arr) {
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            children(arr, i);
         }
+    }
+
+    private static void children(int[] arr, int i) {
+        int left = i * 2 + 1;
+        int right = i * 2 + 2;
+        if (left < arr.length && arr[i] < arr[left]) {
+            exchange(arr, i, left);
+            children(arr, left);
+        }
+        if (right < arr.length && arr[i] < arr[right]) {
+            exchange(arr, i, right);
+            children(arr, right);
+        }
+    }
+
+    @Test
+    public void testHeapSort() {
+        int[] arr = new Random().ints(0, 99).limit(20).toArray();
+        heapSort(arr);
+        printArray(arr);
     }
 
     @Test
