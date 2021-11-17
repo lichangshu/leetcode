@@ -3,6 +3,8 @@ package lee.t.code;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Random;
+
 public class Sorter {
 
     public enum IMPL {
@@ -88,20 +90,23 @@ public class Sorter {
         }, Merge { // 归并排序
 
             @Override
-            public void sort(int[] arr) {
-                int[] res = new int[arr.length];
-                for (int i = 1; i < arr.length; i *= 2) {
-                    for (int j = 0; j < arr.length; ) {
-                        int len = j + i + i;
-                        merge(arr, res, j, j + i, len);
-                        j = len;
+            public void sort(final int[] arr) {
+                int[] oragin = arr, temp = new int[arr.length];
+                for (int cap = 1; cap < oragin.length; cap *= 2) {
+                    for (int i = 0; i < oragin.length; ) {
+                        int next = i + cap + cap;
+                        merge(oragin, temp, i, i + cap, next);
+                        i = next;
                     }
-                    int[] o = arr;
-                    arr = res;
-                    res = o;
+                    int[] o = oragin;
+                    oragin = temp;
+                    temp = o;
                 }
+                System.arraycopy(oragin, 0, arr, 0, arr.length);
             }
 
+            // .....12341234........
+            // .....|...|...|.......
             public void merge(int[] src, int[] target, int from, int left, int right) {
                 left = Math.min(src.length, left);
                 right = Math.min(src.length, right);
@@ -124,7 +129,7 @@ public class Sorter {
                     p2++;
                 }
             }
-        }, Quick { // 快速排序
+        }, Quick { // 快速排序, 基线的左右两侧 ! 算法不对 !
 
             @Override
             public void sort(int[] arr) {
@@ -156,6 +161,44 @@ public class Sorter {
                 quick(arr, base + 1, to);
             }
 
+        }, Quickly { // 快速排序, 两个指针向中间移动
+
+            @Override
+            public void sort(int[] arr) {
+                quick(arr, 0, arr.length - 1);
+            }
+
+            /**
+             *
+             * @param arr
+             * @param start include
+             * @param over include
+             */
+            public void quick(int[] arr, int start, int over) {
+                if (start >= over) return;
+                int from = start;
+                int to = over;
+                int base = arr[from];
+                // printArray(arr, from, to);
+                while (from < to) {
+                    for (; from < to; to--) {
+                        if (base >= arr[to]) {
+                            arr[from] = arr[to];
+                            break;
+                        }
+                    }
+                    for (; from < to; from++) {
+                        if (base <= arr[from]) {
+                            arr[to] = arr[from];
+                            to--;
+                            break;
+                        }
+                    }
+                }
+                arr[from] = base;
+                quick(arr, start, from - 1);
+                quick(arr, to + 1, over);
+            }
         };
 
         public abstract void sort(int[] arr);
@@ -168,14 +211,24 @@ public class Sorter {
     }
 
     @Test
-    public void testRandom() {
-        IMPL v = IMPL.Shell;
-        int[] arr = new int[1001];
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] += Math.random() * 100000;
-        }
+    public void testRandomOne() {
+        IMPL v = IMPL.Merge;
+        int[] arr = new Random().ints(0, 99).limit(18).toArray();
         v.sort(arr);
+        printArray(arr);
         assertASC(arr);
+    }
+
+    @Test
+    public void testRandom() {
+        for (IMPL value : IMPL.values()) {
+            for (int i = 0; i < 100; i++) {
+                int[] arr = new Random().ints(0, 100_000).limit(i).toArray();
+                value.sort(arr);
+                // printArray(arr);
+                assertASC(arr);
+            }
+        }
     }
 
     @Test
@@ -201,6 +254,24 @@ public class Sorter {
                 printArray(arr);
                 assertASC(arr);
             }
+            {
+                int[] arr = {9, 9, 9, 9, 9, 9};
+                v.sort(arr);
+                printArray(arr);
+                assertASC(arr);
+            }
+            {
+                int[] arr = {9};
+                v.sort(arr);
+                printArray(arr);
+                assertASC(arr);
+            }
+            {
+                int[] arr = {};
+                v.sort(arr);
+                printArray(arr);
+                assertASC(arr);
+            }
         }
     }
 
@@ -213,6 +284,20 @@ public class Sorter {
     public static void printArray(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print(arr[i] + ", ");
+        }
+        System.out.println();
+    }
+
+    public static void printArray(int[] arr, int... from) {
+        for (int i = 0; i < arr.length; i++) {
+            boolean exist = false;
+            for (int k : from) {
+                exist = k == i;
+                if (exist) {
+                    break;
+                }
+            }
+            System.out.print(String.format("%s%3d,", exist ? "*" : " ", arr[i]));
         }
         System.out.println();
     }
