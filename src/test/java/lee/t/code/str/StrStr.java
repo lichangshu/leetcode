@@ -5,19 +5,20 @@ import org.junit.Test;
 
 public class StrStr {
     enum Solution {
-        loop {
+        loop {// Timeout
+
             @Override
             public int strStr(String haystack, String needle) {
                 if (needle.length() == 0) return 0;
                 ; //;;;;
+                int val = haystack.length();
                 int len = needle.length();
-                for (int i = 0; i < haystack.length(); i++) {
-                    OUT_FLAG:
-                    for (int j = 0; j < len; j++) {
+                for (int i = 0; i < val; i++) {
+                    for (int j = 0; j < len && i + j < val; j++) {
                         char ch = haystack.charAt(i + j);
                         char c2 = needle.charAt(j);
                         if (c2 != ch) {
-                            break OUT_FLAG;
+                            break;
                         }
                         if (j + 1 == len) return i;
                     }
@@ -35,6 +36,7 @@ public class StrStr {
         for (Solution value : Solution.values()) {
             Assert.assertEquals(0, value.strStr("aaaaaaa", ""));
             Assert.assertEquals(2, value.strStr("aaTop", "Top"));
+            Assert.assertEquals(-1, value.strStr("aaa", "aaaaa"));
         }
     }
 }
