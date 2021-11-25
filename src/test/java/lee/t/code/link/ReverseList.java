@@ -51,7 +51,7 @@ public class ReverseList {
     @Test
     public void testReverseList() {
         for (int i = 1; i < 10; i++) {
-            var head = create(i);
+            var head = ListNode.create(i);
             head = Solution.recursion.reverseList(head);
             int[] res = new int[i];
             for (int j = 0; j < i; j++) {
@@ -59,17 +59,5 @@ public class ReverseList {
             }
             Assert.assertArrayEquals(res, head.toArray());
         }
-    }
-
-
-    public static final ListNode create(int len) {
-        if (len < 1) throw new IllegalArgumentException("LINKED >= 1");
-        ListNode head = new ListNode(1);
-        ListNode next = head;
-        for (int i = 1; i < len; i++) {
-            next.next = new ListNode(i + 1);
-            next = next.next;
-        }
-        return head;
     }
 }
