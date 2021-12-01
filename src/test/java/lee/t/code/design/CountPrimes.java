@@ -13,7 +13,7 @@ public class CountPrimes {
             // 执行用时： 126 ms, 在所有 Java 提交中击败了 44.62% 的用户 内存消耗：37.8 MB, 在所有 Java 提交中击败了 98.82%的用户
             @Override
             public int countPrimes(int n) {
-                if (n <= 1) return 0;
+                if (n <= 2) return 0;
                 int max = n / 2; // 只记录奇数
                 boolean[] checked = new boolean[max];
                 // var checked = new int[max];
@@ -53,10 +53,10 @@ public class CountPrimes {
             // 执行用时： 90 ms , 在所有 Java 提交中击败了 72.14% 的用户 内存消耗： 38 MB , 在所有 Java 提交中击败了 98.80% 的用户
             @Override
             public int countPrimes(int n) {
-                if (n <= 1) return 0;
+                if (n <= 2) return 0;
                 int max = n / 2; // 只记录奇数
                 boolean[] checked = new boolean[max];
-                int count = n > 2 ? 1 : 0;
+                int count = 1;
                 for (int i = 1; i < max; i++) {
                     if (checked[i]) {
                         continue;
@@ -186,8 +186,8 @@ public class CountPrimes {
 
     @Test
     public void test() {
-        int[] ns = {0, 1, 2, 7, 10, 100, 100000,};
-        int[] rs = {0, 0, 0, 3, 4, 25, 9592};
+        int[] ns = {0, 1, 2, 3, 4, 7, 10, 100, 100000,};
+        int[] rs = {0, 0, 0, 1, 2, 3, 4, 25, 9592};
         for (Solution value : Solution.values()) {
             for (int i = 0; i < ns.length; i++) {
                 System.out.println(value.name());
