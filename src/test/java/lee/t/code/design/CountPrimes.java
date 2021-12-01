@@ -50,7 +50,7 @@ public class CountPrimes {
         },
         oddDirect { // 直接 count 少 for 循环一次
 
-            // 执行用时： 90 ms , 在所有 Java 提交中击败了 72.14% 的用户 内存消耗： 38 MB , 在所有 Java 提交中击败了 98.80% 的用户
+            // 执行用时：70 ms, 在所有 Java 提交中击败了75.40%的用户内存消耗：38.1 MB, 在所有 Java 提交中击败了98.80%的用户
             @Override
             public int countPrimes(int n) {
                 if (n <= 2) return 0;
@@ -65,7 +65,7 @@ public class CountPrimes {
                     // System.out.print(i * 2 + 1 + ", ");
                     int v = i + i + 1;
                     for (int k = v + v + v; k < n; k += v + v) {
-                        int p = k / 2;
+                        int p = k >> 1; // 位运算 66 个测试用例 提速 20ms !
                         if (p >= max) {
                             break;
                         }
