@@ -54,6 +54,7 @@ public class ConvertZ {
     enum Solution {
         loop {
             public String convert(String s, int numRows) {
+                if (numRows == 1) return s;
                 StringBuilder sb = new StringBuilder();
                 int n = (numRows - 1) * 2;
                 for (int i = 0; i < numRows; i++) {
@@ -78,6 +79,7 @@ public class ConvertZ {
             }
 
             public String convert(String s, int numRows, StringBuilder print) {
+                if (numRows == 1) return s;
                 StringBuilder sb = new StringBuilder();
                 int n = (numRows - 1) * 2;
                 for (int i = 0; i < numRows; i++) {
@@ -112,9 +114,9 @@ public class ConvertZ {
 
     @Test
     public void test() {
-        var strs = new String[]{"PAYPALISHIRING", "PAYPALISHIRING", "PAYPALISHIRING", "01234567890123456789012345678901234567890"};
-        var nums = new int[]{3, 3, 4, 5};
-        var ress = new String[]{"PAHNAPLSIIGYIR", "PAHNAPLSIIGYIR", "PINALSIGYAHRPI", "08642017957351392604826048351391795742086"};
+        var strs = new String[]{"A", "A", "PAYPALISHIRING", "PAYPALISHIRING", "PAYPALISHIRING", "01234567890123456789012345678901234567890"};
+        var nums = new int[]{1, 2, 3, 3, 4, 5};
+        var ress = new String[]{"A", "A", "PAHNAPLSIIGYIR", "PAHNAPLSIIGYIR", "PINALSIGYAHRPI", "08642017957351392604826048351391795742086"};
         for (Solution value : Solution.values()) {
             for (int i = 0; i < strs.length; i++) {
                 Assert.assertEquals(ress[i], value.convert(strs[i], nums[i]));
